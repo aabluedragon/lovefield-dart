@@ -8,7 +8,7 @@ import 'package:lovefield/lovefield.dart';
 
 main() async {
 
-  SchemaBuilder schemaBuilder = new SchemaBuilder('PersonsDatabase', 671);
+  SchemaBuilder schemaBuilder = new SchemaBuilder('PersonsDatabase', 1);
   schemaBuilder.createTable('Person')
       .addColumn('id', ColumnType.INTEGER)
       .addColumn('age', ColumnType.INTEGER)
@@ -20,7 +20,7 @@ main() async {
     Database db = await schemaBuilder.connect();
     Table personTable = db.getSchema().table('Person');
 
-    Row row = personTable.createRow({'id':5,'name':'Test','age':27});
+    Row row = personTable.createRow({'id':1,'name':'Alon','age':26});
     await db.insert().into(personTable).values([row]).exec();
 
     List<Object> objs = await db.select().from1(personTable).where(
