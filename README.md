@@ -6,7 +6,7 @@ This is a Work-In-Progress!
 
 Getting Started
 ---
-```java
+```c#
 import 'package:lovefield/lovefield.dart';
 
 main() async {
