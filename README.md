@@ -1,5 +1,5 @@
 # lovefield-dart
-(https://github.com/google/lovefield)[Lovefield] interop for Dart
+[Lovefield](https://github.com/google/lovefield) interop for Dart
 
 This is a Work-In-Progress!
 ----
