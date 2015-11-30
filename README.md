@@ -37,3 +37,5 @@ main() async {
 
 }
 ```
+
+Guided by https://github.com/google/lovefield/blob/40bf6a63c67a40f3bd13196fc2ca7c53d0a33b54/dist/lovefield.d.ts
