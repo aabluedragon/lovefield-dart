@@ -30,7 +30,6 @@ main() async {
       and(personTable.v('age').eq(26),personTable.v('name').eq('Alon'))
     ).exec();
 
-    int a = 1;
   } catch(e) {
     // Do something with exception
   }
