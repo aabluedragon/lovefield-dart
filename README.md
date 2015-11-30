@@ -1,7 +1,7 @@
 # lovefield-dart
 [Lovefield](https://github.com/google/lovefield) interop for Dart
 
-This is a Work-In-Progress!
+Keep in mind this is a work-in-progress, so even though basic functionality works (as the example below), more advanced features were not tested and might not yet function as expected.
 ----
 
 Getting Started
