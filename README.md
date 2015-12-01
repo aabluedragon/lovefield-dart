@@ -25,9 +25,11 @@ main() async {
     Row row = personTable.createRow({'id':1,'name':'Alon','age':26});
     await db.insert().into(personTable).values([row]).exec();
 
-    List<Object> objs = await db.select().from1(personTable).where(
+    List<dynamic> objs = await db.select().from1(personTable).where(
       and(personTable.v('age').eq(26),personTable.v('name').eq('Alon'))
     ).exec();
+
+    print(objs.elementAt(0).name);
 
   } catch(e) {
     // Do something with exception
