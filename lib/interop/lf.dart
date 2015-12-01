@@ -10,6 +10,17 @@ import 'query.dart' as query;
 import 'schema.dart' as schema;
 
 
+external Binder bind(int index); // was `number` in d.ts, maybe I should use `num`?
+
+@JS()
+abstract class TransactionStats {
+  external bool success();
+  external int insertedRowCount();
+  external int updatedRowCount();
+  external int deletedRowCount();
+  external int changedTableCount();
+}
+
 @JS()
 abstract class Transaction {
   external Promise<List<Object>> attach(query.Builder query);
@@ -17,7 +28,10 @@ abstract class Transaction {
   external Promise<Null> commit();
   external Promise<List<List<Object>>> exec(List<query.Builder> queries);
   external Promise<Null> rollback();
+  external TransactionStats stats();
 }
+
+
 
 @JS()
 abstract class Database {
@@ -55,8 +69,8 @@ abstract class PredicateProvider {
   external Predicate isNotNull();
 }
 
-@JS('Binder')
-class Binder {
+@JS()
+abstract class Binder {
   external int getIndex();
   external Binder();
 }

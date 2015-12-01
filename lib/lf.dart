@@ -12,6 +12,8 @@ import 'dart:js';
 import 'interop/query.dart' as interop_query;
 import 'interop/promise.dart';
 
+Binder bind(int index)=>new Binder(interop_lf.bind(index));
+
 class Transaction extends InteropWrapper<interop_lf.Transaction> {
 
   Transaction(interop_lf.Transaction interop) {
@@ -54,6 +56,7 @@ class Transaction extends InteropWrapper<interop_lf.Transaction> {
       getWrappedInteropObject().rollback().then((dummy)=>completer.complete())
     ,completer);
   }
+  interop_lf.TransactionStats stats()=>getWrappedInteropObject().stats();
 }
 
 enum ColumnType {
@@ -173,8 +176,8 @@ enum ConstraintAction {
 }
 
 class Binder extends InteropWrapper<interop_lf.Binder> {
-  Binder() {
-    setWrappedInteropObject(new interop_lf.Binder());
+  Binder(interop_lf.Binder interop) {
+    setWrappedInteropObject(interop);
   }
   int getIndex()=>getWrappedInteropObject().getIndex();
 }
