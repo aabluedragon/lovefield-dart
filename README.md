@@ -12,28 +12,23 @@ main() async {
 
   SchemaBuilder schemaBuilder = new SchemaBuilder('PersonsDatabase', 1);
   schemaBuilder.createTable('Person')
-      .addColumn('id', ColumnType.INTEGER)
-      .addColumn('age', ColumnType.INTEGER)
-      .addColumn('name', ColumnType.STRING)
-      .addPrimaryKey(['id'])
-      .addIndex('idxAge', ['age'], false, Order.ASC);
+    .addColumn('id', ColumnType.INTEGER)
+    .addColumn('age', ColumnType.INTEGER)
+    .addColumn('name', ColumnType.STRING)
+    .addPrimaryKey(['id'])
+    .addIndex('idxAge', ['age'], false, Order.ASC);
 
-  try {
-    Database db = await schemaBuilder.connect();
-    Table personTable = db.getSchema().table('Person');
+  Database db = await schemaBuilder.connect();
+  Table personTable = db.getSchema().table('Person');
 
-    Row row = personTable.createRow({'id':1,'name':'Alon','age':26});
-    await db.insert().into(personTable).values([row]).exec();
+  Row row = personTable.createRow({'id':1,'name':'Alon','age':26});
+  await db.insert().into(personTable).values([row]).exec();
 
-    List<dynamic> objs = await db.select().from1(personTable).where(
-      and(personTable.v('age').eq(26),personTable.v('name').eq('Alon'))
-    ).exec();
+  List<dynamic> objs = await db.select().from1(personTable).where(
+    and(personTable.v('age').eq(26),personTable.v('name').eq('Alon'))
+  ).exec();
 
-    print(objs.elementAt(0).name);
-
-  } catch(e) {
-    // Do something with exception
-  }
+  print(objs.elementAt(0).name);
 
 }
 ```
