@@ -25,7 +25,10 @@ main() async {
   await db.insert().into(personTable).values([row]).exec();
 
   List<dynamic> objs = await db.select().from1(personTable).where(
-    and(personTable.v('age').eq(26),personTable.v('name').eq('Alon'))
+    and(
+      personTable.v('age').eq(26),
+      personTable.v('name').eq('Alon')
+    )
   ).exec();
 
   print(objs.elementAt(0).name);
