@@ -31,7 +31,7 @@ main() async {
     )
   ).exec();
 
-  print(objs.elementAt(0).name);
+  print(objs.elementAt(0)['name']);
 
 }
 ```
