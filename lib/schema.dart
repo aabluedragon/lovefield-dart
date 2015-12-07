@@ -11,28 +11,40 @@ import 'interop/promise.dart' show catchToCompleter;
 import 'raw.dart' as raw;
 import 'interop/raw.dart' as interop_raw;
 import 'dart:js';
+import 'orm.dart';
 
 class SchemaBuilder extends InteropWrapper<interop_schema.SchemaBuilder> {
-  SchemaBuilder(String dbName, int dbVersion) {
-    setWrappedInteropObject(new interop_schema.SchemaBuilder(dbName, dbVersion));
+
+  LfOrm _orm;
+  LfOrm get orm {
+    return _orm;
   }
 
-  Future<lf.Database> connect({OnUpgradeCallback onUpgrade:null, DataStoreType storeType:null}) async {
+  SchemaBuilder(String dbName, int dbVersion, {orm:false, List<Type> entities}) {
+    setWrappedInteropObject(new interop_schema.SchemaBuilder(dbName, dbVersion));
+    if(orm) {
+      _orm = new LfOrm(this, entities);
+    }
+  }
+
+  Future<lf.Database> connect({OnUpgradeCallback onUpgrade, DataStoreType storeType}) async {
     Completer<lf.Database> completer = new Completer();
 
-    interop_schema.ConnectOptions connectOptions = null;
+    interop_schema.ConnectOptions connectOptions;
     if(onUpgrade != null || storeType != null) {
       connectOptions = new interop_schema.ConnectOptions(onUpgrade:onUpgrade!=null?(interop_raw.BackStore rawDb){
         onUpgrade(new raw.BackStore(rawDb));
-      }:null, storeType:storeType!=null? storeType.index:null);
+      }:null, storeType:storeType?.index);
     }
 
     return catchToCompleter(
       getWrappedInteropObject().connect(connectOptions).then((interop_lf.Database database) {
-        completer.complete(new lf.Database(database));
+        lf.Database db = new lf.Database(database);
+        completer.complete(db);
       })
     , completer);
   }
+
   TableBuilder createTable(String tableName)=>
       new TableBuilder(getWrappedInteropObject().createTable(tableName));
   DatabaseInfo getSchema()=>new DatabaseInfo(getWrappedInteropObject().getSchema());
@@ -74,10 +86,14 @@ class TableBuilder extends InteropWrapper<interop_schema.TableBuilder> {
 }
 
 
+class Person {
+
+}
 class Table extends InteropWrapper<interop_schema.Table> {
+
   // For queries
   lf.PredicateProvider v(String fieldName)=>
-    new lf.PredicateProvider((getWrappedInteropObject() as JsObject)[fieldName]);
+      new lf.PredicateProvider((getWrappedInteropObject() as JsObject)[fieldName]);
 
   Table(interop_schema.Table interop) {
     setWrappedInteropObject(interop);
@@ -133,7 +149,6 @@ enum DataStoreType {
 }
 
 typedef void OnUpgradeCallback(raw.BackStore rawDb);
-
 
 class Column extends lf.PredicateProvider {
   Column(interop_schema.Column interop):super(interop);

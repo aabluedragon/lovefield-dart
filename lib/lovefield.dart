@@ -5,3 +5,4 @@ export 'query.dart';
 export 'raw.dart';
 export 'schema.dart';
 export 'interop/schema.dart' show Row;
+export 'orm.dart' show LFEntity, LFId;
