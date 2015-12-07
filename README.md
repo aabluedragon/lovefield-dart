@@ -8,6 +8,18 @@ Getting Started
 ```c#
 import 'package:lovefield/lovefield.dart';
 
+@LFEntity
+class Person {
+  String name;
+  int age;
+
+  @LFId
+  int id;
+  sayName() {
+    print('I am $name, $age years old, id is $id');
+  }
+}
+
 main() async {
 
   SchemaBuilder schemaBuilder = new SchemaBuilder('PersonsDatabase', 999, orm: true);
