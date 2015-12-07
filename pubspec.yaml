@@ -3,7 +3,13 @@ version: 0.0.1
 description: Lovefield Wrapper
 
 environment:
-  sdk: '>=1.12.0 <2.0.0'
+  sdk: '>=1.13.0 <2.0.0'
 
 dependencies:
   js: '>=0.6.0'
+  reflectable: any
+
+transformers:
+  - reflectable:
+      entry_points:
+        main.dart
