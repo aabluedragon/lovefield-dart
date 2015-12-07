@@ -10,7 +10,8 @@ import 'package:lovefield/lovefield.dart';
 
 main() async {
 
-  SchemaBuilder schemaBuilder = new SchemaBuilder('PersonsDatabase', 1);
+  SchemaBuilder schemaBuilder = new SchemaBuilder('PersonsDatabase', 999, orm: true);
+
   schemaBuilder.createTable('Person')
     .addColumn('id', ColumnType.INTEGER)
     .addColumn('age', ColumnType.INTEGER)
@@ -21,17 +22,15 @@ main() async {
   Database db = await schemaBuilder.connect();
   Table personTable = db.getSchema().table('Person');
 
-  Row row = personTable.createRow({'id':1,'name':'Alon','age':26});
+  Row row = personTable.createRow({'id':12,'name':'Alon','age':26});
   await db.insert().into(personTable).values([row]).exec();
 
-  List<dynamic> objs = await db.select().from1(personTable).where(
-    and(
-      personTable.v('age').eq(26),
-      personTable.v('name').eq('Alon')
-    )
-  ).exec();
+  var orm = schemaBuilder.orm;
+  List<Person> objs = await orm.exec(db.select().from1(personTable).where(
+      and(personTable.v('age').eq(26),personTable.v('name').eq('Alon'))
+  ), Person);
 
-  print(objs.elementAt(0)['name']);
+  objs.elementAt(0).sayName();
 
 }
 ```
