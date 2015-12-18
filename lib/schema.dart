@@ -28,9 +28,9 @@ class SchemaBuilder extends InteropWrapper<interop_schema.SchemaBuilder> {
     }
 
     return catchToCompleter(
-      getWrappedInteropObject().connect(connectOptions).then((interop_lf.Database database) {
+      getWrappedInteropObject().connect(connectOptions).then(allowInterop((interop_lf.Database database) {
         completer.complete(new lf.Database(database));
-      })
+      }))
     , completer);
   }
   TableBuilder createTable(String tableName)=>
