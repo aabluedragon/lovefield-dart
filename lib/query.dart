@@ -26,7 +26,7 @@ class Builder extends InteropWrapper<interop_query.Builder> {
   Future<List<Object>> exec() async {
     Completer completer = new Completer();
     return catchToCompleter(
-      getWrappedInteropObject().exec().then((List<Object> objs)=>completer.complete(objs))
+      getWrappedInteropObject().exec().then(allowInterop((List<Object> objs)=>completer.complete(objs)))
     ,completer);
   }
   String explain()=>getWrappedInteropObject().explain();

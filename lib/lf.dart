@@ -24,36 +24,36 @@ class Transaction extends InteropWrapper<interop_lf.Transaction> {
     Completer<List<Object>> completer = new Completer();
 
     return catchToCompleter(
-      getWrappedInteropObject().attach(query.getWrappedInteropObject()).then((List<Object> objects){
+      getWrappedInteropObject().attach(query.getWrappedInteropObject()).then(allowInterop((List<Object> objects){
         completer.complete(objects);
-      })
+      }))
     ,completer);
   }
   Future begin(List<schema.Table> scope) async {
     Completer completer = new Completer();
     List<interop_schema.Table> convertedScope = scope.map((schema.Table table)=>table.getWrappedInteropObject()).toList();
     return catchToCompleter(
-    getWrappedInteropObject().begin(convertedScope).then((dummy){
+    getWrappedInteropObject().begin(convertedScope).then(allowInterop((dummy){
       completer.complete();
-    }),completer);
+    })),completer);
   }
   Future commit() async {
     Completer completer = new Completer();
     return catchToCompleter(
-      getWrappedInteropObject().commit().then((dummy)=>completer.complete())
+      getWrappedInteropObject().commit().then(allowInterop((dummy)=>completer.complete()))
     ,completer);
   }
   Future<List<List<Object>>> exec(List<query.Builder> queries) async {
     Completer<List<List<Object>>> completer = new Completer();
     List<interop_query.Builder> interopQueries = queries.map((query.Builder builder)=>builder.getWrappedInteropObject()).toList();
     return catchToCompleter(
-      getWrappedInteropObject().exec(interopQueries).then((List<List<Object>> retVal)=>completer.complete(retVal))
+      getWrappedInteropObject().exec(interopQueries).then(allowInterop((List<List<Object>> retVal)=>completer.complete(retVal)))
     ,completer);
   }
   Future rollback() async {
     Completer completer = new Completer();
     return catchToCompleter(
-      getWrappedInteropObject().rollback().then((dummy)=>completer.complete())
+      getWrappedInteropObject().rollback().then(allowInterop((dummy)=>completer.complete()))
     ,completer);
   }
   interop_lf.TransactionStats stats()=>getWrappedInteropObject().stats();
@@ -85,9 +85,9 @@ class Database extends InteropWrapper<interop_lf.Database> {
   Future<Object> export() {
     Completer<Object> completer = new Completer();
     return catchToCompleter(
-    getWrappedInteropObject().export().then((Object obj){
+    getWrappedInteropObject().export().then(allowInterop((Object obj){
       completer.complete(obj);
-    }),completer);
+    })),completer);
   }
   schema.DatabaseInfo getSchema()=>
       new schema.DatabaseInfo(getWrappedInteropObject().getSchema());
@@ -95,7 +95,7 @@ class Database extends InteropWrapper<interop_lf.Database> {
   Future import(Map data) async {
     Completer completer = new Completer();
     return catchToCompleter(
-      getWrappedInteropObject().import(new JsObject.jsify(data)).then((dummy)=>completer.complete())
+      getWrappedInteropObject().import(new JsObject.jsify(data)).then(allowInterop((dummy)=>completer.complete()))
     ,completer);
   }
 

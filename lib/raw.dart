@@ -20,35 +20,35 @@ class BackStore extends InteropWrapper<interop_raw.BackStore> {
   Future dropTable(String tableName) async {
     Completer completer = new Completer();
     return catchToCompleter(
-      getWrappedInteropObject().dropTable(tableName).then((dummy){
+      getWrappedInteropObject().dropTable(tableName).then(allowInterop((dummy){
         completer.complete();
-      })
+      }))
     ,completer);
   }
 
   Future addTableColumn(String tableName, String columnName, dynamic defaultValue) async {
     Completer completer = new Completer();
     return catchToCompleter(
-        getWrappedInteropObject().addTableColumn(tableName, columnName, defaultValue).then((dummy){
+        getWrappedInteropObject().addTableColumn(tableName, columnName, defaultValue).then(allowInterop((dummy){
           completer.complete();
-        })
+        }))
     ,completer);
   }
 
   Future dropTableColumn(String tableName, String columnName) async {
     Completer completer = new Completer();
     return catchToCompleter(
-        getWrappedInteropObject().dropTableColumn(tableName, columnName).then((dummy){
+        getWrappedInteropObject().dropTableColumn(tableName, columnName).then(allowInterop((dummy){
           completer.complete();
-        })
+        }))
     ,completer);
   }
   Future renameTableColumn(String tableName, String oldColumnName, String newColumnName) async {
     Completer completer = new Completer();
     return catchToCompleter(
-        getWrappedInteropObject().renameTableColumn(tableName, oldColumnName, newColumnName).then((dummy){
+        getWrappedInteropObject().renameTableColumn(tableName, oldColumnName, newColumnName).then(allowInterop((dummy){
           completer.complete();
-        })
+        }))
     ,completer);
   }
 
