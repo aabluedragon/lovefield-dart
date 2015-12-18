@@ -11,8 +11,12 @@ abstract class Promise<T> {
 }
 
 Future catchToCompleter(Promise promise, Completer completer) {
-  (promise as JsObject).callMethod('catch',[allowInterop((e){
-    completer.completeError(e);
-  })]);
+  try {
+    (promise as JsObject).callMethod('catch',[allowInterop((e){
+      completer.completeError(e);
+    })]);
+  } catch(e) {
+    //Ignorring error, happens in db.connect() for example.
+  }
   return completer.future.timeout(const Duration(seconds: 5));
 }
